@@ -48,3 +48,74 @@ Compare two product catalog tables (`products_day1.csv` and `products_day2.csv`)
 - `sql_based.ipynb` – notebook containing the entire process
 - `README.md` – this file
 
+
+# Part 2: Python-Based Data Cleaning and Transformation
+
+## Objective
+
+Clean and transform messy sales data using Python:
+- Validate schema and formats
+- Handle missing or incorrect data
+- Compute a derived column (`total_price`)
+
+---
+
+## Input File
+
+**File**: `raw_sales.csv`  
+Contains messy sales records with inconsistent formats.
+
+### Sample Input:
+
+| order_id | product_id | quantity | price_per_unit | order_date   |
+|----------|------------|----------|----------------|--------------|
+| 1        | 101        | "2"      | 20.00          | 2025/06/01   |
+| 2        | 102        | -1       | "15.50"        | 2025-06-01   |
+| "3"      | 103        | 1        | 35             | "2025-06-01" |
+| 4        | 104        | 3        | 20             | 2025-06-02   |
+| 5        | 105        | ""       | 99.00          | 06-03-2025   |
+| 6        | 106        | 2        | 25.99          | 2025-06-03   |
+
+---
+
+##  Tasks Performed
+
+1. Loaded the dataset using `pandas`
+2. Created utility functions (UDFs) to:
+   - Convert `order_id`, `product_id`, `quantity` to integers
+   - Convert `price_per_unit` to float
+   - Convert `order_date` to datetime
+   - Fill blank or missing values with 0
+3. Defined a UDF to compute:
+   - `total_price = quantity * price_per_unit`
+4. Added `total_price` column to the cleaned DataFrame
+5. Saved the output as `cleaned_sales.csv`
+
+---
+
+## Output File
+
+**File**: `cleaned_sales.csv`
+
+### Sample Output:
+
+| order_id | product_id | quantity | price_per_unit | order_date | total_price |
+|----------|------------|----------|----------------|------------|-------------|
+| 1        | 101        | 2        | 20.00          | 2025-06-01 | 40.00       |
+| 2        | 102        | -1       | 15.50          | 2025-06-01 | -15.50      |
+| 3        | 103        | 1        | 35.00          | 2025-06-01 | 35.00       |
+| 4        | 104        | 3        | 20.00          | 2025-06-02 | 60.00       |
+| 5        | 105        | 0        | 99.00          | 2025-06-03 | 0.00        |
+| 6        | 106        | 2        | 25.99          | 2025-06-03 | 51.98       |
+
+---
+
+
+
+## Folder Contents
+
+- `raw_sales.csv` – messy input data
+- `python_based.py` – Python script for cleaning and transformation
+- `cleaned_sales.csv` – cleaned and enriched output
+- `README.md` – task summary (this file)
+
